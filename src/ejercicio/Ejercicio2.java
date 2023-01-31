@@ -34,6 +34,11 @@ public class Ejercicio2 extends JFrame {
 	private JTable table;
 	private List<Autocar> listaAutocares;
 	private JSpinner spinner_Plazas;
+	private Integer plazas;
+	private double kms;
+	private String matricula;
+	private String marca;
+	private String modelo;
 
 	/**
 	 * Launch the application.
@@ -165,20 +170,26 @@ public class Ejercicio2 extends JFrame {
 	}
 
 	protected void validaDatos() {
-		String matricula = txtFld_Matricula.getText();
-		String marca = txtFld_Marca.getText();
-		String modelo = txtFld_Modelo.getText();
-		String kms = txtFld_KMS.getText();
-		Integer plazas = (Integer) spinner_Plazas.getValue();
-		if(matricula==null||matricula.isBlank()||marca==null||marca.isBlank()||modelo==null||modelo.isBlank()||kms==null||kms.isBlank()||plazas==null||plazas.toString().isBlank()) {
-			JOptionPane.showMessageDialog(this, "Alguno de los campos a rellenar está vacío.\nEscríbelos todos, y vuelve a intentarlo.","Faltan datos",JOptionPane.ERROR_MESSAGE);
+		try {
+			 plazas = (Integer) spinner_Plazas.getValue();
+			 kms = Double.parseDouble(txtFld_KMS.getText());
+			 matricula = txtFld_Matricula.getText();
+			 marca = txtFld_Marca.getText();
+			 modelo = txtFld_Modelo.getText();
+			if(matricula==null||matricula.isBlank()||marca==null||marca.isBlank()||modelo==null||modelo.isBlank()) {
+				JOptionPane.showMessageDialog(this, "Alguno de los campos a rellenar está vacío.\nEscríbelos todos, y vuelve a intentarlo.","Faltan datos",JOptionPane.ERROR_MESSAGE);
+				return;
+			}
+		}catch(NumberFormatException nfe) {
+			JOptionPane.showMessageDialog(this, "Error, el campo 'Kilómetros' es inválido, está vacío, o contiene caracteres no numéricos","Error crítico",JOptionPane.ERROR_MESSAGE);
 			return;
 		}
-		insertaDatos(matricula,marca,modelo,kms+"",plazas+"");
+// esto es un poco absurdo, si ya lo tienes en integer paa que lo pasas a String
+		insertaDatos(matricula,marca,modelo,kms,plazas);
 	}
 
-	private void insertaDatos(String matricula,String marca,String modelo,String kms, String plazas) {
-		Autocar a = new Autocar(matricula,marca,modelo,Double.parseDouble(kms),Integer.parseInt(plazas));
+	private void insertaDatos(String matricula,String marca,String modelo,Double kms, Integer plazas) {
+		Autocar a = new Autocar(matricula,marca,modelo,kms,plazas);
 		if(!listaAutocares.contains(a)) {
 			listaAutocares.add(a);
 		}else {

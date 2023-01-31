@@ -9,11 +9,11 @@ private String modelo;
 private Double kms;
 private Integer plazas;
 
-protected Autocar(String matricula,String marca,String modelo,Double kilometros, Integer plazas) {
+protected Autocar(String matricula,String marca,String modelo,Double kms, Integer plazas) {
 	this.matricula = matricula;
 	this.marca = marca;
 	this.modelo = modelo;
-	this.kms = kilometros;
+	this.kms = kms;
 	this.plazas = plazas;
 }
 
